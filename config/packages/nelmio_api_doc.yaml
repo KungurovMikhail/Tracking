@@ -1,0 +1,16 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Tracking_api
+            description: This is tracking time api
+            version: 1.0.0
+        components:
+            securitySchemes:
+                ApiKeyAuth:
+                    type: http
+                    scheme: bearer
+
+    areas: # to filter documented areas
+        path_patterns:
+            - ^/api/v1
+ 
