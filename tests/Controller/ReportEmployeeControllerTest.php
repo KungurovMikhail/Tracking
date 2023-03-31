@@ -41,9 +41,8 @@ class ReportEmployeeControllerTest extends AbstractControllerTest
                         'properties' => [
                             'name' => ['type' => 'string'],
                             'perWeekHours' => [
-                                'type' => 'object',
-                                'items' => ['type' => 'string']
-                            ],
+                                'type' =>  ['array', 'object']
+                            ]
                         ],
                     ],
                 ],
