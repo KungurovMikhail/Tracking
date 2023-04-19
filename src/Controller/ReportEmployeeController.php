@@ -13,7 +13,7 @@ use App\Model\ErrorResponse;
 
 class ReportEmployeeController extends AbstractController
 {
-    public function __construct(private ReportsEmloyeeService $reportsEmployee)
+    public function __construct(private readonly ReportsEmloyeeService $reportsEmployee)
     {
     }
 
@@ -23,7 +23,7 @@ class ReportEmployeeController extends AbstractController
     #[Route(path: '/api/v1/report', methods: ['GET'])]
     public function report(): Response
     {
-        return $this->json(($this->reportsEmployee->reportEmployeesOnWeek()));
+        return $this->json($this->reportsEmployee->reportEmployeesOnWeek());
     }
 
     #[OA\Tag(name: 'Public')]
@@ -32,6 +32,6 @@ class ReportEmployeeController extends AbstractController
     #[Route(path: '/api/v1/list_employee', methods: ['GET'])]
     public function list(): Response
     {
-        return $this->json(($this->reportsEmployee->reportEmployeesList()));
+        return $this->json($this->reportsEmployee->reportEmployeesList());
     }
 }

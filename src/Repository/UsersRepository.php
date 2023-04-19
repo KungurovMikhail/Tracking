@@ -6,6 +6,7 @@ use App\Entity\Users;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @extends ServiceEntityRepository<Users>
@@ -43,15 +44,20 @@ class UsersRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findIdByToken($token): int
+    public function findIdByToken(string $accessToken): int
     {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('q.id')
             ->from('App\Entity\Users', 'q')
             ->where('q.apiToken = :token')
-            ->setParameter('token', $token);
+            ->setParameter('token', $accessToken);
         $query = $qb->getQuery();
 
         return $query->getSingleScalarResult();
+    }
+
+    public function exsistsByAccessToken(string $accessToken): bool
+    {
+        return null == $this->findOneBy(['apiToken' => $accessToken]);
     }
 }

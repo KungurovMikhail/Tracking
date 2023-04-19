@@ -2,25 +2,27 @@
 
 namespace App\Service;
 
-use App\Exception\TimeStartError;
+use App\Exception\TimeStartErrorException;
 use App\Repository\UsersRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class TimeService
 {
     public function __construct(
-        private EntityManagerInterface $em,
-        private UsersRepository $usersRepository
-    )
+        private readonly EntityManagerInterface $em,
+        private readonly UsersRepository $usersRepository,
+        private readonly Security $security)
     {
     }
 
-    public function startTime(int $id): void
+    public function startTime(): void
     {
+        $id = $this->security->getUser()->getUserIdentifier();
         $user = $this->usersRepository->getUserById($id);
         $date = new DateTime();
-        
+
         $numberOfWeekCurrent = $date->format('W');
         $weeks = $user->getPerWeekHours();
         if ($weeks == null || !array_key_exists($numberOfWeekCurrent, $weeks)) {
@@ -32,13 +34,14 @@ class TimeService
         $this->em->flush();
     }
 
-    public function stopTime(int $id): void
+    public function stopTime(): void
     {
+        $id = $this->security->getUser()->getUserIdentifier();
         $user = $this->usersRepository->getUserById($id);
         $date = new DateTime();
 
         if ($user->getDateStart() === null) {
-            throw new TimeStartError();
+            throw new TimeStartErrorException();
         } else {
             $interval = ($user->getDateStart())->diff($date);
             $hour = $interval->format("%h");

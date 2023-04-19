@@ -11,9 +11,10 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
 use App\Model\ErrorResponse;
 
-class TimeController extends AbstractController
+class
+TimeController extends AbstractController
 {
-    public function __construct(private TimeService $TimeService)
+    public function __construct(private readonly TimeService $timeService)
     {
     }
 
@@ -21,11 +22,11 @@ class TimeController extends AbstractController
     #[Security(name: "ApiKeyAuth")]
     #[OA\Response(response: 200, description: 'Turn on timer')]
     #[OA\Response(response: 404, description: 'User not found', attachables: [new Model(type: ErrorResponse::class)])]
-    #[Route(path: '/api/v1/user/{id}/start', methods: ['POST'])]
-
-    public function usersStartTime($id): Response
+    #[Route(path: '/api/v1/user/start', methods: ['POST'])]
+    public function usersStartTime(): Response
     {
-        $this->TimeService->startTime($id);
+        $this->timeService->startTime();
+
         return $this->json('success:start');
     }
 
@@ -34,10 +35,11 @@ class TimeController extends AbstractController
     #[OA\Response(response: 200, description: 'Turn off timer')]
     #[OA\Response(response: 403, description: 'Timer dont start', attachables: [new Model(type: ErrorResponse::class)])]
     #[OA\Response(response: 404, description: 'User not found', attachables: [new Model(type: ErrorResponse::class)])]
-    #[Route(path: '/api/v1/user/{id}/stop', methods: ['POST'])]
-    public function usersStopTime($id): Response
+    #[Route(path: '/api/v1/user/stop', methods: ['POST'])]
+    public function usersStopTime(): Response
     {
-        $this->TimeService->stopTime($id);
+        $this->timeService->stopTime();
+
         return $this->json('success:stop');
     }
 }

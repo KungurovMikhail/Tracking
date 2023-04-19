@@ -10,7 +10,7 @@ use App\Repository\UsersRepository;
 
 class ReportsEmloyeeService
 {
-    public function __construct(private UsersRepository $usersRepository)
+    public function __construct(private readonly UsersRepository $usersRepository)
     {
     }
 

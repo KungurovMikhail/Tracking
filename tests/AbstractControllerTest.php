@@ -10,9 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class AbstractControllerTest extends WebTestCase
 {
     use JsonAssertions;
+
     protected KernelBrowser $client;
 
-    protected EntityManagerInterface $em;
+    protected ?EntityManagerInterface $em;
 
     protected function setUp(): void
     {
@@ -26,6 +27,6 @@ class AbstractControllerTest extends WebTestCase
         parent::tearDown();
 
         $this->em->close();
-        $this->em;
+        $this->em = null;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Exception;
 
-class TimeStartError extends \RuntimeException
+class TimeStartErrorException extends \RuntimeException
 {
     public function __construct()
     {
