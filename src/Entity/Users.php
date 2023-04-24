@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
-use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -26,10 +25,10 @@ class Users implements UserInterface
     private array $roles = [];
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?DateTimeInterface $dateStart = null;
+    private ?\DateTimeInterface $dateStart = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?DateTimeInterface $dateStop = null;
+    private ?\DateTimeInterface $dateStop = null;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
     private ?array $perWeekHours = [];
@@ -63,24 +62,24 @@ class Users implements UserInterface
         return $this;
     }
 
-    public function getDateStart(): ?DateTimeInterface
+    public function getDateStart(): ?\DateTimeInterface
     {
         return $this->dateStart;
     }
 
-    public function setDateStart(?DateTimeInterface $dateStart): self
+    public function setDateStart(?\DateTimeInterface $dateStart): self
     {
         $this->dateStart = $dateStart;
 
         return $this;
     }
 
-    public function getDateStop(): ?DateTimeInterface
+    public function getDateStop(): ?\DateTimeInterface
     {
         return $this->dateStop;
     }
 
-    public function setDateStop(?DateTimeInterface $dateStop): self
+    public function setDateStop(?\DateTimeInterface $dateStop): self
     {
         $this->dateStop = $dateStop;
 
@@ -95,6 +94,7 @@ class Users implements UserInterface
     public function setPerWeekHours(?array $perWeekHours): self
     {
         $this->perWeekHours = $perWeekHours;
+
         return $this;
     }
 
@@ -106,6 +106,7 @@ class Users implements UserInterface
     public function setApiToken(string $apiToken): self
     {
         $this->apiToken = $apiToken;
+
         return $this;
     }
 

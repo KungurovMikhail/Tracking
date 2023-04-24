@@ -21,8 +21,7 @@ class ApiExceptionListener
         private readonly LoggerInterface $logger,
         private readonly SerializerInterface $serializer,
         private readonly bool $isDebug = true
-    )
-    {
+    ) {
     }
 
     public function __invoke(ExceptionEvent $event): void

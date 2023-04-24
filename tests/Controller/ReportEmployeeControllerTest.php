@@ -8,6 +8,8 @@ class ReportEmployeeControllerTest extends AbstractControllerTest
 {
     public function testList(): void
     {
+        $this->createAndFlushUsers();
+
         $this->client->request('GET', '/api/v1/list_employee');
         $responseContent = json_decode($this->client->getResponse()->getContent(), true);
         $this->assertResponseIsSuccessful();
@@ -26,6 +28,8 @@ class ReportEmployeeControllerTest extends AbstractControllerTest
 
     public function testReport(): void
     {
+        $this->createAndFlushUsers();
+
         $this->client->request('GET', '/api/v1/report');
         $responseContent = json_decode($this->client->getResponse()->getContent(), true);
         $this->assertResponseIsSuccessful();
@@ -41,12 +45,22 @@ class ReportEmployeeControllerTest extends AbstractControllerTest
                         'properties' => [
                             'name' => ['type' => 'string'],
                             'perWeekHours' => [
-                                'type' =>  ['array', 'object']
-                            ]
+                                'type' => ['array', 'object'],
+                            ],
                         ],
                     ],
                 ],
             ],
         ]);
+    }
+
+    private function createAndFlushUsers(): void
+    {
+        for ($i = 0; $i < 10; $i++) {
+            $user = $this->createUsers();
+
+            $this->em->persist($user);
+        }
+        $this->em->flush();
     }
 }

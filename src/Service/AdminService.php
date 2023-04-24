@@ -18,7 +18,7 @@ class AdminService
     {
         $admin = (new Admin())
             ->setUsername($login)
-            ->setRoles(["ROLE_ADMIN"]);
+            ->setRoles(['ROLE_ADMIN']);
         $admin->setPassword($this->passwordHasher->hashPassword($admin, $password));
 
         $this->adminRepository->save($admin, true);

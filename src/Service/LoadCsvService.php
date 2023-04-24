@@ -18,7 +18,7 @@ class LoadCsvService
     {
         $file = $request->files->get('file');
         $extensionFile = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
-        if ($extensionFile != 'csv') {
+        if ('csv' != $extensionFile) {
             throw new FileFormatException();
         } else {
             $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
